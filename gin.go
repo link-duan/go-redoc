@@ -17,12 +17,20 @@ type Setting struct {
 
 	// Title of doc site
 	Title string
+
+	// Redoc options. https://github.com/Redocly/redoc#redoc-options-object
+	// example: { "json-sample-expand-level": "all" }
+	RedocOptions map[string]string
 }
 
 func (s *Setting) normalize() {
 	if s.Title == "" {
 		s.Title = "Redoc"
 	}
+	if s.RedocOptions == nil {
+		s.RedocOptions = make(map[string]string)
+	}
+	s.RedocOptions["spec-url"] = s.UriPrefix + "/doc.json"
 }
 
 const htmlTemplate = `<!DOCTYPE html>
@@ -40,7 +48,7 @@ const htmlTemplate = `<!DOCTYPE html>
     </style>
   </head>
   <body>
-    <redoc spec-url='%s'></redoc>
+    <redoc %s></redoc>
     <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
   </body>
 </html>`
@@ -71,10 +79,15 @@ type ginController struct {
 }
 
 func (c *ginController) index(ctx *gin.Context) {
+	options := ""
+	for k, v := range c.setting.RedocOptions {
+		options += fmt.Sprintf(" %s=\"%s\"", k, v)
+	}
+
 	content := fmt.Sprintf(
 		htmlTemplate,
 		c.setting.Title,
-		c.setting.UriPrefix+"/doc.json",
+		options,
 	)
 	ctx.Data(http.StatusOK, "text/html", []byte(content))
 }

@@ -16,6 +16,10 @@ func main() {
 		OpenAPIJson: doc,
 		UriPrefix:   "/swagger",
 		Title:       "Go Redoc",
+		RedocOptions: map[string]string{
+			"schema-expansion-level": "all",
+			"expand-responses":       "200,201",
+		},
 	}))
 	r.Run(":8888")
 }
