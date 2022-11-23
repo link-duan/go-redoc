@@ -49,7 +49,7 @@ const htmlTemplate = `<!DOCTYPE html>
   </head>
   <body>
     <redoc %s></redoc>
-    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    <script src="https://unpkg.com/redoc-ld@2.0.0/bundles/redoc.standalone.js"></script>
   </body>
 </html>`
 

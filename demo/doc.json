@@ -1420,20 +1420,12 @@
               "description": "Find more info here",
               "url": "https://example.com"
             },
-            "description": "Pet ID",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Id"
-              }
-            ]
+            "description": "My Pet ID",
+            "$ref": "#/components/schemas/Id"
           },
           "category": {
             "description": "Categories this pet belongs to",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Category"
-              }
-            ]
+            "$ref": "#/components/schemas/Category"
           },
           "name": {
             "description": "The name given to a pet",
